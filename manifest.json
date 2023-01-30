@@ -1,0 +1,25 @@
+{
+    "description": "Firefox History Manager is progressive tool for manage browser history",
+    "manifest_version": 2,
+    "name": "Firefox History Manager",
+    "version": "1.0",
+    "homepage_url": "https://github.com/mdn/webextensions-examples/tree/master/beastify",
+    "background": {
+        "scripts": [
+            "content_scripts/background.js"
+        ]
+    },
+    "icons": {
+        "48": "icons/history.svg"
+    },
+    "browser_action": {
+        "default_icon": "icons/history.svg",
+        "default_title": "default_title - Firefox History Manager"
+    },
+    "web_accessible_resources": [
+        "beasts/frog.jpg"
+    ],
+    "permissions": [
+        "activeTab"
+    ]
+}
