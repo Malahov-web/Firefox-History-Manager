@@ -38,10 +38,7 @@ body {
 
 }
 
-.history__list-item-title {
-    /* width: 50px; */
-    /* background-color: #7ff; */
-}
+.history__list-item-title {}
 
 .history__list-item-link {
     /* width: 50px; */
