@@ -47,20 +47,20 @@ function openMyPage() {
     });
 }
 
-function onVisited(historyItem) {
-    if (historyItem.url == browser.runtime.getURL("./index.html")) {
-        browser.history.deleteUrl({
-            url: historyItem.url
-        });
-    }
-}
+// function onVisited(historyItem) {
+//     if (historyItem.url == browser.runtime.getURL("./index.html")) {
+//         browser.history.deleteUrl({
+//             url: historyItem.url
+//         });
+//     }
+// }
 
 /*
 Назначает beastify() обработчиком сообщений расширения.
 */
 // browser.runtime.onMessage.addListener(beastify);
 browser.browserAction.onClicked.addListener(openMyPage);
-browser.history.onVisited.addListener(onVisited);
+// browser.history.onVisited.addListener(onVisited);
 
 
 

@@ -1,0 +1,51 @@
+html,
+body {
+    font-family: Roboto;
+    color: #333;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1600px;
+}
+
+.history__list {}
+
+.history__list-item {
+    border: 1px solid #ddd;
+    padding: 20px 20px;
+    background-color: #f7f7f7;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+}
+
+.history__list-item-datetime {
+    width: 150px;
+    /* background-color: #ff7; */
+}
+
+.history__list-item-icon {
+    width: 50px;
+    /* background-color: #f7f; */
+    display: flex;
+}
+
+.history__list-item-icon img {
+    margin: auto;
+    max-width: 32px;
+    max-height: 32px;
+
+}
+
+.history__list-item-title {
+    /* width: 50px; */
+    /* background-color: #7ff; */
+}
+
+.history__list-item-link {
+    /* width: 50px; */
+    margin-left: 50px;
+    color: #77f;
+
+}

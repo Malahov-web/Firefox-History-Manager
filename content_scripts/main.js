@@ -5,38 +5,66 @@
 // * затем вставляет выбранного зверя
 // * затем удаляется как обработчик
 // */
-// function beastify(request, sender, sendResponse) {
-//     removeEverything();
-//     insertBeast(request.beastURL);
-//     browser.runtime.onMessage.removeListener(beastify);
-// }
-
-// /*
-// Удаляет каждый узел в document.body
-// */
-// function removeEverything() {
-//     while (document.body.firstChild) {
-//         document.body.firstChild.remove();
-//     }
-// }
-
-// /*
-// Учитывая URL изображения зверя, создаёт и стилизует узел IMG,
-// указывающий на это изображение, затем вставляет узел в документ.
-// */
-// function insertBeast(beastURL) {
-//     var beastImage = document.createElement("img");
-//     beastImage.setAttribute("src", beastURL);
-//     beastImage.setAttribute("style", "width: 100vw");
-//     // beastImage.setAttribute("style", "height: 100vh");
-//     beastImage.setAttribute("style", "height: 50vh");
-//     document.body.appendChild(beastImage);
-// }
-
-// /*
-// Назначает beastify() обработчиком сообщений расширения.
-// */
-// // browser.runtime.onMessage.addListener(beastify);
 
 
-// browser.runtime.onMessage.addListener(beastify);
+browser.history // ERROR
+    .search({
+        text: "",
+        startTime: 0,
+    })
+    .then(renderList);
+
+
+function renderList(historyItems) {
+
+    // let listEl = '';
+    let listEl = document.createElement('ul');
+    // listEl.innerHTML('Это список истории');
+    listEl.innerHTML = 'Это список истории';
+    // listEl.classList.add = 'history__list';
+    listEl.classList.add('history__list');
+    let listItemsTemplate = ``;
+
+    // собираем пункты
+    for (const item of historyItems) {
+        // console.log(item.url);
+        console.log(item);
+        // console.log(new Date(item.lastVisitTime));
+
+        // let itemTemplate = `<li>${item}</li> `; // не нужна ?
+
+        listItemsTemplate += `<li class="history__list-item">${renderListItem(item)}</li> `;
+    }
+
+    // вставляем пункты в список
+    listEl.innerHTML = listItemsTemplate;
+
+
+    // listEl
+
+    let appEl = document.querySelector('#app');
+    appEl.append(listEl);
+
+
+}
+
+function renderListItem(item) {
+    // item
+
+    let template = '';
+
+    template += `
+        <time class="history__list-item-datetime" datetime="ГГГГ-ММ-ДДTчч:мм">${item.lastVisitTime}</time>
+        <div class="history__list-item-icon"> 
+            <img src="${item.url}favicon.ico" alt="">
+        </div>
+        <div class="history__list-item-title">${item.title}</div>
+        <a href="${item.url}" class="history__list-item-link">link to page</a>  
+    `;
+
+
+    return template;
+}
+
+
+debugger

@@ -20,6 +20,8 @@
         "beasts/frog.jpg"
     ],
     "permissions": [
-        "activeTab"
+        "activeTab",
+        "history",
+        "tabs"
     ]
 }
