@@ -1,5 +1,10 @@
 <template>
-  <hello-world />
+  
+  <div class="asd">
+    <hello-world />
+    i am Vue!
+  </div>
+  
 </template>
 
 <script>
