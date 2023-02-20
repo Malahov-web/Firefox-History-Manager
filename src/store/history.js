@@ -1,7 +1,7 @@
 export default {
     state: {
         value: "my value",
-        history: []
+        history: [],
     },
     mutations: {
         updateValue(state, payload) {
@@ -10,8 +10,7 @@ export default {
 
         SET_HISTORY(state, payload) {
             state.history = payload;
-        }
-
+        },
     },
     getters: {
         value: (state) => {
@@ -32,7 +31,6 @@ export default {
         // },
 
         fetchHistory({ commit }) {
-
             browser.history // ERROR
                 .search({
                     text: "",
@@ -42,7 +40,6 @@ export default {
                     commit("SET_HISTORY", response.data);
                     console.log("history has been fetched:", response); // <--- here
                 });
-
         },
 
         fetchHistoryByLastMonth({ commit }) {
@@ -60,15 +57,20 @@ export default {
                     endTime: new Date(),
                     // endTime: dateStartTime,
 
-                    maxResults: 1000
+                    maxResults: 1000,
                 })
                 .then((response) => {
                     // commit("SET_COURSES", response.data);
-                    commit("SET_HISTORY", response.data);
+                    // commit("SET_HISTORY", response.data); // -
+                    commit("SET_HISTORY", response); // +
+
+                    // this.myHistory = response.data;  // undefined ???
+                    // this.myHistory = response;  // undefined ???
+
+
                     console.log("history has been fetched:", response); // <--- here
                 });
-
-        }
+        },
 
         // browser.history // ERROR
         // .search({
@@ -76,8 +78,5 @@ export default {
         //     startTime: 0,
         // })
         // .then(renderList);
-
-
-
     },
 };

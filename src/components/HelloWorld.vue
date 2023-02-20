@@ -19,6 +19,7 @@
 export default {
   name: "HelloWorld",
   mounted() {
+    
     browser.runtime.sendMessage({});
   },
 
