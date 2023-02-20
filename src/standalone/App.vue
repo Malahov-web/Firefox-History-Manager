@@ -10,9 +10,11 @@
     </v-app-bar>
 
     <v-main>
-      <v-container grid-list-xs> </v-container>
+      <v-container grid-list-xs>
+        <day class="asd"></day>
+      </v-container>
       <!--  -->
-      <hello-world />
+      <!-- <hello-world /> -->
       i am Vue!
     </v-main>
   </v-app>
@@ -24,11 +26,14 @@
 </template>
 
 <script>
-import HelloWorld from "@/components/HelloWorld.vue";
+// import HelloWorld from "@/components/HelloWorld.vue";
+import Day from "@/components/Day.vue";
 
 export default {
   name: "App",
-  components: { HelloWorld },
+  components: { Day, 
+//   HelloWorld
+   },
 
   data: () => ({ drawer: null }),
 };
@@ -36,6 +41,6 @@ export default {
 
 <style lang="scss">
 .container {
-  max-width: 1600px;
+  max-width: 1600px !important;
 }
 </style>

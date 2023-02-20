@@ -22,7 +22,7 @@ module.exports = {
         //         // "tabWidth": 4,
         //         // "disableLanguages": ["js"] // don't work?
         //     },
-        //     "disableLanguages": ["js"]  // открывать  / закрывать когда работаем с файлами .js
+        //     // "disableLanguages": ["js"]  // открывать  / закрывать когда работаем с файлами .js
         // ],
 
     },

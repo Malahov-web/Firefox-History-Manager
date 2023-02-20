@@ -2,6 +2,9 @@
   <div>
     <h2>{{ defaultText }}</h2>
     <p>123 {{ descriptionText }}</p>
+    <p>ID of the first: {{ history }}</p>
+    
+     
   </div>
 </template>
 

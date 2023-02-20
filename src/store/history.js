@@ -63,6 +63,7 @@ export default {
                     maxResults: 1000
                 })
                 .then((response) => {
+                    // commit("SET_COURSES", response.data);
                     commit("SET_HISTORY", response.data);
                     console.log("history has been fetched:", response); // <--- here
                 });
