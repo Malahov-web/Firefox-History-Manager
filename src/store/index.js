@@ -7,14 +7,13 @@ import history from "@/store/history.js";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {},
-    mutations: {},
-    actions: {},
-    modules: {
-        history: history,
-    },
+  state: {},
+  mutations: {},
+  actions: {},
+  modules: {
+    history: history,
+  },
 });
-
 
 // v.2 - скопировали из HealthBook
 // // Modules
@@ -37,8 +36,6 @@ export default new Vuex.Store({
 //     mutations: {},
 //     actions: {},
 // });
-
-
 
 // v.3 перенесли сюда код из модуля history.js
 

@@ -1,7 +1,6 @@
 <template>
   <div class="day">
-    <!-- <div class="day__title">dayTodayFromMoment: <br />title {{ dayDate }}</div> -->
-    <div class="day__title">{{ dayDate }}</div>
+    <div class="day__title">title</div>
 
     <div class="day__history">
       hist
@@ -20,20 +19,18 @@
         <!-- <div v-for="item in myHistory" :key="item.id"> -->
         <div class="history__item-time">
           <!-- {{ item.dateHumanReadable }} -->
-          {{ getHistoryItemTimeFormatted(item.lastVisitTime) }}
+          {{ formatDate(item.lastVisitTime) }}
         </div>
         <div class="history__item-favicon">
-          <img __src="" alt="" v-bind:src="generateFaviconUrl(item.url)" />
+          {{ item.lastVisitTime }}
         </div>
         <div class="history__item-title">
           {{ item.title }}
         </div>
         <div class="history__item-link">
-          <a v-bind:href="item.url" class="asd">Link</a>
+          <a v-bind:href="item.title" class="asd">Link</a>
         </div>
-        <div class="history__item-button">
-          <span>X</span>
-        </div>
+        <div class="history__item-button">X</div>
       </div>
 
       <!-- <div class="history__item">
@@ -48,8 +45,6 @@
 </template>
 
 <script>
-import moment from "moment";
-
 export default {
   name: "Day",
 
@@ -60,8 +55,8 @@ export default {
   //   },
 
   created() {
-    // this.$store.dispatch("fetchHistoryByLastMonth");
-    this.$store.dispatch("fetchHistoryByDay");
+    this.$store.dispatch("fetchHistoryByLastMonth");
+    // this.$store.dispatch("fetchCoursesTypes");
     console.log("Create HOOK");
   },
 
@@ -77,18 +72,6 @@ export default {
       //   return this.addDatesToHistoryItems(history); // -
       return this.addDatesToHistoryItems(this.history);
     },
-
-    dayDate() {
-      // return this.getDayDate(this.history);
-      return this.getDayDateFormatted(this.history);
-    },
-
-    // moment(this.day);
-
-    // DEV Test +
-    // dayTodayFromMoment() {
-    //   return moment(this.day);
-    // },
   },
 
   methods: {
@@ -118,48 +101,7 @@ export default {
       return day + " " + month;
     },
 
-    getDayDate(historyArr) {
-      if (historyArr[0] == undefined) {
-        // historyArr[0] = {};
-        return;
-      }
-
-      let dayDate = new Date(historyArr[0].lastVisitTime);
-
-      let day = dayDate.getDate(); // 3
-      let month = dayDate.getMonth();
-      // let weekDay = dayDate.getDay();
-      // let weekDayName = moment().day(weekDay); // возвращает дату полную 2 Fri Mar 03 2023 22:21:08 GMT+0300
-      // let weekDayName = moment().weekday(weekDay); //
-      // let weekDayName = moment.weekday(1); // -
-      // let weekDayName = moment(dayDate).weekday(1); // +-
-
-      let weekDayName = moment(dayDate).format("dddd"); // +
-
-      // return day;
-      return `${day} ${month} ${weekDayName} `;
-      // return ` ${weekDayName} `; // +
-    },
-
-    getDayDateFormatted(historyArr) {
-      if (historyArr[0] == undefined) {
-        return;
-      }
-      let dayDate = new Date(historyArr[0].lastVisitTime);
-
-      return moment(dayDate).format("D MMMM, dddd");
-    },
-
-    getHistoryItemTimeFormatted(datetime) {
-      return moment(datetime).format("H:mm");
-    },
-
-    generateFaviconUrl(itemUrlString) {
-      let urlObj = new URL(itemUrlString);
-      let faviconUrlString = urlObj.origin + "/favicon.ico";
-
-      return faviconUrlString; //itemUrlString;
-    },
+    groupByDays() {},
   },
 };
 </script>
