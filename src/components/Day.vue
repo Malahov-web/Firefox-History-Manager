@@ -1,25 +1,14 @@
 <template>
   <div class="day">
-    <!-- <div class="day__title">dayTodayFromMoment: <br />title {{ dayDate }}</div> -->
     <div class="day__title">{{ dayDate }}</div>
 
     <div class="day__history">
-      hist
-      <div class="history__item">
-        <div class="history__item-time"></div>
-        <div class="history__item-favicon"></div>
-        <div class="history__item-title"></div>
-        <div class="history__item-link"></div>
-        <div class="history__item-button"></div>
-      </div>
-      <!-- <p>history: {{ history }} </p> -->
-      <!-- <p>myHistory: {{ myHistory }} </p> -->
-
-      <div v-for="item in historyHumanReadable" :key="item.id">
-        <!-- <div v-for="item in history" :key="item.id"> -->
-        <!-- <div v-for="item in myHistory" :key="item.id"> -->
+      <div
+        class="history__item"
+        v-for="item in historyHumanReadable"
+        :key="item.id"
+      >
         <div class="history__item-time">
-          <!-- {{ item.dateHumanReadable }} -->
           {{ getHistoryItemTimeFormatted(item.lastVisitTime) }}
         </div>
         <div class="history__item-favicon">
@@ -29,10 +18,14 @@
           {{ item.title }}
         </div>
         <div class="history__item-link">
-          <a v-bind:href="item.url" class="asd">Link</a>
+          <a v-bind:href="item.url" class="asd">
+            <v-icon dense __color="grey lighten-1"> link </v-icon>
+            Link</a
+          >
         </div>
         <div class="history__item-button">
-          <span>X</span>
+          <!-- <span>X</span> -->
+          <v-icon dense __color="grey lighten-1"> close </v-icon>
         </div>
       </div>
 

@@ -1,0 +1,150 @@
+@charset 'utf-8';
+
+/*
+ * Table of contents   Содержание
+ *
+ *  0. Imports
+ *  1. General Vars, Mixins, Extends
+
+ *  14.
+ *
+ */
+
+
+
+
+// @import 'services/services'; // services and helpers functions
+// @import 'libs';         // external libs
+@import 'fonts'; // fonts add
+// @import 'mwgrid';       // layout framework
+
+@import 'vars'; // vars
+@import 'mixins';
+// @import 'base';         // base,
+
+
+body {
+  background-color: $colorBG;
+  font-family: "Inter";
+}
+
+body .theme--light.v-application {
+  background-color: $colorBG;
+}
+
+
+
+
+
+.container {
+  max-width: 1600px !important;
+}
+
+.day {
+  &__title {
+    margin: 0.5em  0;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 33px;
+    /* identical to box height, or 165% */
+
+    /* Text Heading */
+    // color: #353537;
+    color: $colorTextHeading;
+  }
+
+  &__history {}
+}
+
+.history {
+  $history_item_width: 1000px; //
+  // $history_item_width: 800px; // 1000px; // 24  
+  $history_favicon_width: 1*$l_h; // 24
+  $history_button_width: 2.5*$l_h; //  2 ? 2.5
+
+  &__item {
+    position: relative;
+    @include flex(flex-start, center);
+    // @include flex(space-between, center);
+    // padding: 1em  1*$l_h;
+    // padding: 0.5em 1*$l_h;
+    padding: 0.75em 1*$l_h;
+
+    max-width: $history_item_width;
+    margin-bottom: 1px;
+    background: $white;
+    border-radius: $bd_rad;
+
+    &:hover {
+      background-color: $grey_super_light;
+    }
+
+    &-time {
+      @include width(75px, 75px);
+      font-size: 16px;
+      line-height: 33px;
+      /* identical to box height, or 206% */
+      color: $colorTextHeading;
+    }
+
+    &-favicon {
+      @include width(2* $history_favicon_width, $history_favicon_width);
+      @include flex(flex-start, center);
+
+      img {
+        // width: 24px;
+        // height: 24px;
+        @include width($history_favicon_width, $history_favicon_width);
+      }
+    }
+
+    &-title {
+      font-size: 16px;
+      line-height: 33px;
+      /* identical to box height, or 206% */
+      color: $colorTextHeading;
+    }
+
+    &-link {
+      margin-left: 2em;
+      // State
+      opacity: 0.85;
+
+      .v-icon {
+        color: $colorLink!important;
+      }
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &-button {
+      // padding: 0  1em;
+      @include pseudoelement_right_top(0, 0);
+      width: $history_button_width;
+      height: 100%;
+      // @include size(2* $l_h, 100%);  //  не подключили bourbon)
+      
+      @include flex(center, center);
+      // background-color: $colorLink;
+      border-left: 1px solid $colorBG;
+      i {
+        color: $grey_light !important;
+
+      }
+
+
+      &:hover {
+        i {
+          // color: $error;
+          color: $error_color !important;
+          // background-color: $error_color;
+
+          // &.v-application .grey--text.text--lighten-1 {
+          //   color: $error_color;
+          // }
+        }
+      }
+    }
+  }
+}

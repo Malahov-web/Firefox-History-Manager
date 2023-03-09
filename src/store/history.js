@@ -77,12 +77,33 @@ export default {
     },
 
     fetchHistoryByDay({ commit }) {
+      // Дата за вчерашнее число)  start
+      let dateOneDayAgo = new Date();
+      dateOneDayAgo.setDate(dateOneDayAgo.getDate() - 1);
+      dateOneDayAgo.setHours(0, 0, 0);
+
+      let endTimeOneDayAgo = new Date();
+      endTimeOneDayAgo.setHours(0, 0, 0);
+      // let endTimeOneDayAgo = dateOneDayAgo.setDate(dateOneDayAgo.getDate() + 1);
+      console.log("dateOneDayAgo");
+      console.log(dateOneDayAgo);
+      console.log("endTimeOneDayAgo");
+      console.log(endTimeOneDayAgo);
+      // Дата за вчерашнее число)  end
+
       browser.history // ERROR
-        .search({ text: "" }) // по умолчанию за последнеи 24 часа
-        // .search({
-        //     text: "",
-        //     startTime: 0,
-        // })
+        // .search({ text: "" }) // по умолчанию за последнеи 24 часа
+        .search({
+          text: "",
+          // startTime: dateOneDayAgo,
+          // // endTime: new Date(),
+          // endTime: endTimeOneDayAgo,
+          //
+          // TEMP DEV: за конкретную фикс дату - 6 марта
+          startTime: new Date("2023-03-06"),
+          // endTime: new Date(),
+          endTime: new Date("2023-03-07"),
+        })
         .then((response) => {
           commit("SET_HISTORY", response);
           console.log("history has been fetched:", response); // <--- here

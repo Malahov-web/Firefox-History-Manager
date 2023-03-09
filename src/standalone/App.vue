@@ -45,7 +45,5 @@ export default {
 </script>
 
 <style lang="scss">
-.container {
-  max-width: 1600px !important;
-}
+@import "../assets/styles/style"; // main styles
 </style>
