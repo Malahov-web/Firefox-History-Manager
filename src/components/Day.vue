@@ -20,10 +20,11 @@
         <div class="history__item-link">
           <a v-bind:href="item.url" class="asd">
             <v-icon dense __color="grey lighten-1"> link </v-icon>
-            Link</a
-          >
+            Link
+          </a>
         </div>
-        <div class="history__item-button">
+        <!-- <div class="history__item-button" @click="deleteItem(item.id)"> -->
+        <div class="history__item-button" @click="deleteItem(item.url)">
           <!-- <span>X</span> -->
           <v-icon dense __color="grey lighten-1"> close </v-icon>
         </div>
@@ -152,6 +153,20 @@ export default {
       let faviconUrlString = urlObj.origin + "/favicon.ico";
 
       return faviconUrlString; //itemUrlString;
+    },
+
+    __deleteItem(itemId) {
+      // alert("deleteItem");
+      // return itemId;
+
+      // this.$store.dispatch("setCompareMode", key);
+      this.$store.dispatch("deleteItem", itemId);
+    },
+
+    deleteItem(itemUrl) {
+      console.log("Delete item in component: " + itemUrl);
+
+      this.$store.dispatch("deleteItem", itemUrl);
     },
   },
 };

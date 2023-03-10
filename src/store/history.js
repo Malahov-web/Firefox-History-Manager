@@ -15,6 +15,29 @@ export default {
     SET_HISTORY(state, payload) {
       state.history = payload;
     },
+
+    // __DELETE_URL_FROM_HISTORY(state, removedItemId) {
+    //   // state.history = id;
+
+    //   let newHistory = state.history.filter((item) => {
+    //     // return item !== removedItemId
+    //     return item.id !== item.removedItemId;
+    //   });
+    //   // state.productsCompareIds = newProductsCompareIds;
+    //   state.history = newHistory;
+    // },
+
+    // REMOVE_FROM_COMPARE(state, removeProductId) {
+    DELETE_URL_FROM_HISTORY(state, urlToRemove) {
+      // state.history = id;
+      // let my = urlToRemove;
+
+      let newHistory = state.history.filter((item) => {
+        return item.url !== urlToRemove;
+      });
+      // state.productsCompareIds = newProductsCompareIds;
+      state.history = newHistory;
+    },
   },
 
   getters: {
@@ -107,6 +130,36 @@ export default {
         .then((response) => {
           commit("SET_HISTORY", response);
           console.log("history has been fetched:", response); // <--- here
+        });
+    },
+
+    __deleteItem({ commit }, value) {
+      // let deletingUrl = browser.history.deleteUrl({ url: urlToRemove });
+      browser.history
+        .deleteUrl({
+          url: urlToRemove,
+        })
+        .then((response) => {
+          // commit("SET_HISTORY", response);
+          console.log("history item has been removed:", response);
+
+          commit("DELETE_URL_FROM_HISTORY", value);
+        });
+    },
+
+    deleteItem({ commit }, value) {
+      // itemUrl
+      // let deletingUrl = browser.history.deleteUrl({ url: urlToRemove });
+      browser.history
+        .deleteUrl({
+          url: value,
+          // url: "abrakadabra",
+        })
+        .then((response) => {
+          // commit("SET_HISTORY", response);
+          console.log("history item has been removed:", response);
+
+          commit("DELETE_URL_FROM_HISTORY", value);
         });
     },
 
