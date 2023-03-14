@@ -11,8 +11,8 @@
 
     <v-main>
       <v-container grid-list-xs>
-        <Day class="asd"></Day>
-        <!-- <Feed class="asd"></Feed> -->
+        <!-- <Day class="asd"></Day> -->
+        <Feed class="asd"></Feed>
       </v-container>
       <!--  -->
       <!-- <hello-world /> -->
@@ -28,15 +28,15 @@
 
 <script>
 // import HelloWorld from "@/components/HelloWorld.vue";
-import Day from "@/components/Day.vue";
-// import Feed from "@/components/Feed.vue";
+// import Day from "@/components/Day.vue";
+import Feed from "@/components/Feed.vue";
 
 export default {
   name: "App",
 
   components: {
-    Day,
-    // Feed,
+    // Day,
+    Feed,
     //   HelloWorld
   },
 

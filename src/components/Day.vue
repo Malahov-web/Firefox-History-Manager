@@ -8,7 +8,10 @@
         v-for="item in historyHumanReadable"
         :key="item.id"
       >
-        <div class="history__item-time">
+        <div
+          class="history__item-time"
+          v-bind:mydata="humanDateTEMP(item.lastVisitTime)"
+        >
           {{ getHistoryItemTimeFormatted(item.lastVisitTime) }}
         </div>
         <div class="history__item-favicon">
@@ -167,6 +170,10 @@ export default {
       console.log("Delete item in component: " + itemUrl);
 
       this.$store.dispatch("deleteItem", itemUrl);
+    },
+
+    humanDateTEMP(datetime) {
+      return moment(datetime).format();
     },
   },
 };

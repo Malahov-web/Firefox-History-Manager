@@ -1,49 +1,48 @@
 <template>
-  <div class="days">
-    <div
-      class="day"
-      v-for="(dayHistory, name) in historyGroupedByDay"
-      :key="name"
-    >
-      <div class="day__title">
-        {{ getDayDateDMMMMdddd(name) }}
+  <div class="day">
+    <div class="day__title">{{ dayDate }}</div>
+
+    <div class="day__history">
+      hist
+      <div class="history__item">
+        <div class="history__item-time"></div>
+        <div class="history__item-favicon"></div>
+        <div class="history__item-title"></div>
+        <div class="history__item-link"></div>
+        <div class="history__item-button"></div>
       </div>
+      <!-- <p>history: {{ history }} </p> -->
+      <!-- <p>myHistory: {{ myHistory }} </p> -->
 
-      <div class="day__history">
-        <div class="day__history">
-          <HistoryItem
-            class="asd"
-            v-for="item in dayHistory"
-            :key="item.id"
-            :item="item"
-          >
-          </HistoryItem>
-
-          <!--div class="history__item" v-for="item in dayHistory" :key="item.id">
-            <div
-              class="history__item-time"
-              v-bind:mydata="humanDateTEMP(item.lastVisitTime)"
-            >
-              {{ getHistoryItemTimeFormatted(item.lastVisitTime) }}
-            </div>
-            <div class="history__item-favicon">
-              <img __src="" alt="" v-bind:src="generateFaviconUrl(item.url)" />
-            </div>
-            <div class="history__item-title">
-              {{ item.title }}
-            </div>
-            <div class="history__item-link">
-              <a v-bind:href="item.url" class="asd">
-                <v-icon dense __color="grey lighten-1"> link </v-icon>
-                Link
-              </a>
-            </div>
-            <div class="history__item-button" @click="deleteItem(item.url)">
-              <v-icon dense __color="grey lighten-1"> close </v-icon>
-            </div>
-          </div-->
+      <div v-for="item in historyHumanReadable" :key="item.id">
+        <!-- <div v-for="item in history" :key="item.id"> -->
+        <!-- <div v-for="item in myHistory" :key="item.id"> -->
+        <div class="history__item-time">
+          <!-- {{ item.dateHumanReadable }} -->
+          {{ formatDate(item.lastVisitTime) }}
         </div>
+        <div class="history__item-favicon">
+          {{ item.lastVisitTime }}
+        </div>
+        <div class="history__item-title">
+          {{ item.title }}
+        </div>
+        <div class="history__item-link">
+          <a v-bind:href="item.title" class="asd">Link</a>
+        </div>
+        <div class="history__item-button">X</div>
       </div>
+      <p v-if="1">
+        {{ historyGroupedByDay }}
+      </p>
+
+      <!-- <div class="history__item">
+        <div class="history__item-time"></div>
+        <div class="history__item-favicon"></div>
+        <div class="history__item-title"></div>
+        <div class="history__item-link"></div>
+        <div class="history__item-button"></div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -51,19 +50,9 @@
 <script>
 import moment from "moment";
 import HistoryServices from "@/services/HistoryServices.js";
-// import HistoryItem from "@/components/HistoryItem.vue";
-import HistoryItem from "@/components/HistoryItem.vue";
-// import Feed from "@/components/Feed.vue";
 
 export default {
-  components: {
-    // Day,
-    // HistoryItem,
-    HistoryItem,
-    //   HelloWorld
-  },
-
-  name: "Feed",
+  name: "Day",
 
   //   data() {
   //     return {
@@ -72,8 +61,8 @@ export default {
   //   },
 
   created() {
-    this.$store.dispatch("fetchHistoryByLastMonth");
-    // this.$store.dispatch("fetchHistory");
+    // this.$store.dispatch("fetchHistoryByLastMonth");
+    this.$store.dispatch("fetchHistory");
     console.log("Create HOOK");
   },
 
@@ -100,7 +89,6 @@ export default {
 
     historyGroupedByDay() {
       return this.groupHistoryByDay(this.history);
-      //   return this.groupHistoryByDay(this.historyHumanReadable);
     },
   },
 
@@ -130,31 +118,7 @@ export default {
 
       return day + " " + month;
     },
-
-    // getDayDateFormatted(historyArr) {
-    //   if (historyArr[0] == undefined) {
-    //     return;
-    //   }
-    //   let dayDate = new Date(historyArr[0].lastVisitTime);
-
-    //   return moment(dayDate).format("D MMMM, dddd");
-    // },
-
-    getDayDateDMMMMdddd(dateStr) {
-      let date = moment(dateStr).format("D MMMM, dddd");
-      return date;
-    },
-
-    getHistoryItemTimeFormatted(datetime) {
-      return moment(datetime).format("H:mm");
-    },
-
-    generateFaviconUrl(itemUrlString) {
-      let urlObj = new URL(itemUrlString);
-      let faviconUrlString = urlObj.origin + "/favicon.ico";
-
-      return faviconUrlString; //itemUrlString;
-    },
+    groupByDays() {},
 
     __groupHistoryByDay(historyArr) {
       let historyGroupedObj = {};
@@ -195,7 +159,7 @@ export default {
       return historyGroupedObj;
     },
 
-    v_dateHumanReadable_groupHistoryByDay(historyArr) {
+    groupHistoryByDay(historyArr) {
       let historyGroupedObj = {};
       // пройтись циклом
 
@@ -223,40 +187,6 @@ export default {
       console.log(historyGroupedObj);
 
       return historyGroupedObj;
-    },
-
-    groupHistoryByDay(historyArr) {
-      let historyGroupedObj = {};
-      // пройтись циклом
-
-      for (let i = 0; i < historyArr.length; i++) {
-        const element = historyArr[i];
-
-        // 0.прочесть дату
-        let date = new Date(element.lastVisitTime);
-        // console.log("date");
-        // console.log(date); // +
-
-        // 1. узнать к какому дню относится
-        // let dateDay = date.getDate();
-        // let weekDayName = moment(dayDate).format("dddd"); // +
-        let dateDMMYYYY = moment(date).format("D-MMMM-YYYY");
-
-        // 2. если есть такой объект с датой этого дня
-        if (undefined == historyGroupedObj[dateDMMYYYY]) {
-          historyGroupedObj[dateDMMYYYY] = [];
-        }
-        historyGroupedObj[dateDMMYYYY].push(element);
-      } // end for
-
-      console.log("historyGroupedObj");
-      console.log(historyGroupedObj);
-
-      return historyGroupedObj;
-    },
-
-    humanDateTEMP(datetime) {
-      return moment(datetime).format();
     },
   },
 };
