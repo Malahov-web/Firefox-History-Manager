@@ -1,7 +1,6 @@
 import moment from "moment";
 // const spamWords = ["viagra", "XXX", "supersale", "free investment"];
 
-
 export default {
     noSpam: (str) => {
         const keywords = spamWords;
@@ -25,12 +24,7 @@ export default {
 
         return moment(dayDate).format("D MMMM, dddd");
     },
-
-
 };
-
-
-
 
 /*
 Дано: массив объектов

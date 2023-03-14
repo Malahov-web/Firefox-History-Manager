@@ -18,30 +18,6 @@
             :item="item"
           >
           </HistoryItem>
-
-          <!--div class="history__item" v-for="item in dayHistory" :key="item.id">
-            <div
-              class="history__item-time"
-              v-bind:mydata="humanDateTEMP(item.lastVisitTime)"
-            >
-              {{ getHistoryItemTimeFormatted(item.lastVisitTime) }}
-            </div>
-            <div class="history__item-favicon">
-              <img __src="" alt="" v-bind:src="generateFaviconUrl(item.url)" />
-            </div>
-            <div class="history__item-title">
-              {{ item.title }}
-            </div>
-            <div class="history__item-link">
-              <a v-bind:href="item.url" class="asd">
-                <v-icon dense __color="grey lighten-1"> link </v-icon>
-                Link
-              </a>
-            </div>
-            <div class="history__item-button" @click="deleteItem(item.url)">
-              <v-icon dense __color="grey lighten-1"> close </v-icon>
-            </div>
-          </div-->
         </div>
       </div>
     </div>
@@ -51,25 +27,14 @@
 <script>
 import moment from "moment";
 import HistoryServices from "@/services/HistoryServices.js";
-// import HistoryItem from "@/components/HistoryItem.vue";
 import HistoryItem from "@/components/HistoryItem.vue";
-// import Feed from "@/components/Feed.vue";
 
 export default {
   components: {
-    // Day,
-    // HistoryItem,
     HistoryItem,
-    //   HelloWorld
   },
 
   name: "Feed",
-
-  //   data() {
-  //     return {
-  //         myHistory: [1,2,3]
-  //     };
-  //   },
 
   created() {
     this.$store.dispatch("fetchHistoryByLastMonth");
@@ -83,11 +48,6 @@ export default {
       return this.$store.state.history.history; // -
       // перенесли код из модуля в store/index.js,
       //   return this.$store.state.history;
-    },
-
-    historyHumanReadable() {
-      //   return this.addDatesToHistoryItems(history); // -
-      return this.addDatesToHistoryItems(this.history);
     },
 
     dayDate() {
@@ -105,57 +65,33 @@ export default {
   },
 
   methods: {
-    // Добавить даты чп
-    name() {},
-    addDatesToHistoryItems(historyArr) {
-      let newArr = [];
+    groupHistoryByDay(historyArr) {
+      let historyGroupedObj = {};
+      // пройтись циклом
 
-      newArr = historyArr.map((currentValue) => {
-        let dateHumanReadable = new Date(currentValue.lastVisitTime);
-        // currentValue["dateHumanReadable"] = "123";
-        currentValue["dateHumanReadable"] = dateHumanReadable;
+      for (let i = 0; i < historyArr.length; i++) {
+        const element = historyArr[i];
 
-        return currentValue;
-      });
+        // 0.прочесть дату
+        let date = new Date(element.lastVisitTime);
+        // console.log("date");
+        // console.log(date); // +
 
-      //   return 1;
-      return newArr;
+        // 1. узнать к какому дню относится
+        let dateDMMYYYY = moment(date).format("D-MMMM-YYYY");
+
+        // 2. если нет такого объекта с датой этого дня - создать его, потом добавить
+        if (undefined == historyGroupedObj[dateDMMYYYY]) {
+          historyGroupedObj[dateDMMYYYY] = [];
+        }
+        historyGroupedObj[dateDMMYYYY].push(element);
+      } // end for
+
+      console.log("historyGroupedObj");
+      console.log(historyGroupedObj);
+
+      return historyGroupedObj;
     },
-
-    formatDate(datetime) {
-      let date = new Date(datetime);
-
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-
-      return day + " " + month;
-    },
-
-    // getDayDateFormatted(historyArr) {
-    //   if (historyArr[0] == undefined) {
-    //     return;
-    //   }
-    //   let dayDate = new Date(historyArr[0].lastVisitTime);
-
-    //   return moment(dayDate).format("D MMMM, dddd");
-    // },
-
-    getDayDateDMMMMdddd(dateStr) {
-      let date = moment(dateStr).format("D MMMM, dddd");
-      return date;
-    },
-
-    getHistoryItemTimeFormatted(datetime) {
-      return moment(datetime).format("H:mm");
-    },
-
-    generateFaviconUrl(itemUrlString) {
-      let urlObj = new URL(itemUrlString);
-      let faviconUrlString = urlObj.origin + "/favicon.ico";
-
-      return faviconUrlString; //itemUrlString;
-    },
-
     __groupHistoryByDay(historyArr) {
       let historyGroupedObj = {};
       // пройтись циклом
@@ -176,17 +112,6 @@ export default {
           historyGroupedObj[dateDay] = [];
         }
         historyGroupedObj[dateDay].push(element);
-
-        // if (historyGroupedObj[dateDay]) {
-        //     historyGroupedObj[dateDay].push(element);
-        // }
-
-        // for (const key in object) {
-        //     if (Object.hasOwnProperty.call(object, key)) {
-        //         const element = object[key];
-
-        //     }
-        // }
       } // end for
 
       console.log("historyGroupedObj");
@@ -194,69 +119,11 @@ export default {
 
       return historyGroupedObj;
     },
+    // Добавить даты чп
 
-    v_dateHumanReadable_groupHistoryByDay(historyArr) {
-      let historyGroupedObj = {};
-      // пройтись циклом
-
-      for (let i = 0; i < historyArr.length; i++) {
-        const element = historyArr[i];
-
-        // 0.прочесть дату
-        let date = new Date(element.dateHumanReadable);
-        // console.log("date");
-        // console.log(date); // +
-
-        // 1. узнать к какому дню относится
-        // let dateDay = date.getDate();
-        // let weekDayName = moment(dayDate).format("dddd"); // +
-        let dateDMMYYYY = moment(date).format("D-MMMM-YYYY");
-
-        // 2. если есть такой объект с датой этого дня
-        if (undefined == historyGroupedObj[dateDMMYYYY]) {
-          historyGroupedObj[dateDMMYYYY] = [];
-        }
-        historyGroupedObj[dateDMMYYYY].push(element);
-      } // end for
-
-      console.log("historyGroupedObj");
-      console.log(historyGroupedObj);
-
-      return historyGroupedObj;
-    },
-
-    groupHistoryByDay(historyArr) {
-      let historyGroupedObj = {};
-      // пройтись циклом
-
-      for (let i = 0; i < historyArr.length; i++) {
-        const element = historyArr[i];
-
-        // 0.прочесть дату
-        let date = new Date(element.lastVisitTime);
-        // console.log("date");
-        // console.log(date); // +
-
-        // 1. узнать к какому дню относится
-        // let dateDay = date.getDate();
-        // let weekDayName = moment(dayDate).format("dddd"); // +
-        let dateDMMYYYY = moment(date).format("D-MMMM-YYYY");
-
-        // 2. если есть такой объект с датой этого дня
-        if (undefined == historyGroupedObj[dateDMMYYYY]) {
-          historyGroupedObj[dateDMMYYYY] = [];
-        }
-        historyGroupedObj[dateDMMYYYY].push(element);
-      } // end for
-
-      console.log("historyGroupedObj");
-      console.log(historyGroupedObj);
-
-      return historyGroupedObj;
-    },
-
-    humanDateTEMP(datetime) {
-      return moment(datetime).format();
+    getDayDateDMMMMdddd(dateStr) {
+      let date = moment(dateStr).format("D MMMM, dddd");
+      return date;
     },
   },
 };

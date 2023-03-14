@@ -8,8 +8,6 @@
   </div> -->
 
   <div class="history__item">
-    <!-- <div class="asd">Hi i'm HistoryItem comp!</div> -->
-
     <div
       class="history__item-time"
       v-bind:mydata="humanDateTEMP(item.lastVisitTime)"
@@ -28,7 +26,7 @@
         Link
       </a>
     </div>
-    <div class="history__item-button" @click="deleteItem(item.url)">
+    <div class="history__item-button" @click="onDeleteItem(item.url)">
       <v-icon dense __color="grey lighten-1"> close </v-icon>
     </div>
   </div>
@@ -65,7 +63,7 @@ export default {
       return moment(datetime).format();
     },
 
-    deleteItem(itemUrl) {
+    onDeleteItem(itemUrl) {
       console.log("Delete item in component: " + itemUrl);
 
       this.$store.dispatch("deleteItem", itemUrl);

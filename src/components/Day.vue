@@ -3,35 +3,13 @@
     <div class="day__title">{{ dayDate }}</div>
 
     <div class="day__history">
-      <div
-        class="history__item"
+      <HistoryItem
+        class="asd"
         v-for="item in historyHumanReadable"
         :key="item.id"
+        :item="item"
       >
-        <div
-          class="history__item-time"
-          v-bind:mydata="humanDateTEMP(item.lastVisitTime)"
-        >
-          {{ getHistoryItemTimeFormatted(item.lastVisitTime) }}
-        </div>
-        <div class="history__item-favicon">
-          <img __src="" alt="" v-bind:src="generateFaviconUrl(item.url)" />
-        </div>
-        <div class="history__item-title">
-          {{ item.title }}
-        </div>
-        <div class="history__item-link">
-          <a v-bind:href="item.url" class="asd">
-            <v-icon dense __color="grey lighten-1"> link </v-icon>
-            Link
-          </a>
-        </div>
-        <!-- <div class="history__item-button" @click="deleteItem(item.id)"> -->
-        <div class="history__item-button" @click="deleteItem(item.url)">
-          <!-- <span>X</span> -->
-          <v-icon dense __color="grey lighten-1"> close </v-icon>
-        </div>
-      </div>
+      </HistoryItem>
 
       <!-- <div class="history__item">
         <div class="history__item-time"></div>
@@ -46,15 +24,15 @@
 
 <script>
 import moment from "moment";
+import HistoryServices from "@/services/HistoryServices.js";
+import HistoryItem from "@/components/HistoryItem.vue";
 
 export default {
   name: "Day",
 
-  //   data() {
-  //     return {
-  //         myHistory: [1,2,3]
-  //     };
-  //   },
+  components: {
+    HistoryItem,
+  },
 
   created() {
     // this.$store.dispatch("fetchHistoryByLastMonth");
@@ -77,15 +55,11 @@ export default {
 
     dayDate() {
       // return this.getDayDate(this.history);
-      return this.getDayDateFormatted(this.history);
+      //   return this.getDayDateFormatted(this.history);
+
+      // v. при подключении кода из HistoryServices.js
+      return HistoryServices.getDayDateFormatted(this.history);
     },
-
-    // moment(this.day);
-
-    // DEV Test +
-    // dayTodayFromMoment() {
-    //   return moment(this.day);
-    // },
   },
 
   methods: {
@@ -106,16 +80,8 @@ export default {
       return newArr;
     },
 
-    formatDate(datetime) {
-      let date = new Date(datetime);
-
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-
-      return day + " " + month;
-    },
-
-    getDayDate(historyArr) {
+    // Останется как пример окда, возможно перенести куда-то в свою библиотеку
+    __getDayDate(historyArr) {
       if (historyArr[0] == undefined) {
         // historyArr[0] = {};
         return;
@@ -136,44 +102,6 @@ export default {
       // return day;
       return `${day} ${month} ${weekDayName} `;
       // return ` ${weekDayName} `; // +
-    },
-
-    getDayDateFormatted(historyArr) {
-      if (historyArr[0] == undefined) {
-        return;
-      }
-      let dayDate = new Date(historyArr[0].lastVisitTime);
-
-      return moment(dayDate).format("D MMMM, dddd");
-    },
-
-    getHistoryItemTimeFormatted(datetime) {
-      return moment(datetime).format("H:mm");
-    },
-
-    generateFaviconUrl(itemUrlString) {
-      let urlObj = new URL(itemUrlString);
-      let faviconUrlString = urlObj.origin + "/favicon.ico";
-
-      return faviconUrlString; //itemUrlString;
-    },
-
-    __deleteItem(itemId) {
-      // alert("deleteItem");
-      // return itemId;
-
-      // this.$store.dispatch("setCompareMode", key);
-      this.$store.dispatch("deleteItem", itemId);
-    },
-
-    deleteItem(itemUrl) {
-      console.log("Delete item in component: " + itemUrl);
-
-      this.$store.dispatch("deleteItem", itemUrl);
-    },
-
-    humanDateTEMP(datetime) {
-      return moment(datetime).format();
     },
   },
 };
