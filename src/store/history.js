@@ -3,6 +3,8 @@ export default {
         value: "my value",
         history: [],
 
+        dateCalendar: "",
+
         dateToday: new Date(),
         // dateToday: new Date('10-02-2023'),
     },
@@ -38,6 +40,12 @@ export default {
             // state.productsCompareIds = newProductsCompareIds;
             state.history = newHistory;
         },
+
+        SET_DATE_CALENDAR(state, datetime) {
+            state.dateCalendar = datetime;
+            // console.log('state.dateCalendar in SET_DATE_CALENDAR');
+            // console.log(state.dateCalendar); // +
+        }
     },
 
     getters: {
@@ -171,6 +179,14 @@ export default {
         //     startTime: 0,
         // })
         // .then(renderList);
+
+        changeDateCalendar({ commit }, dateStr) {
+
+            let datetime = new Date(dateStr);
+            commit("SET_DATE_CALENDAR", datetime);
+            // console.log('datetime to SET_DATE_CALENDAR');
+            // console.log(datetime);
+        }
     },
 };
 
@@ -185,4 +201,3 @@ export default {
     visitCount: 1
 }
 */
-

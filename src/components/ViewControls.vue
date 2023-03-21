@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-sheet tile height="54" class="d-flex">
-      <!-- <v-btn icon class="ma-2" @click="$refs.calendar.prev()"> -->
-      <v-btn icon class="ma-2" @click="moveBack()">
+      <v-btn icon class="ma-2" @click="$refs.calendar.prev()">
+        <!-- <v-btn icon class="ma-2" @click="moveBack()"> -->
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-select
@@ -53,9 +53,10 @@
       <v-calendar
         ref="calendar"
         v-model="value"
-        :weekdays="[0, 1, 2, 3, 4]"
-        :type="'month'"
+        :weekdays="[0, 1, 2, 3, 4, 5, 6]"
+        :type="type"
         :events="events"
+
         @change="getEvents"
       ></v-calendar>
     </v-sheet>
@@ -70,6 +71,11 @@ export default {
   name: "ViewControls",
 
   data: () => ({
+        // :start="start"
+        // :end="end"    
+    // start: "",
+    // end: "",
+    //
     type: "month",
     types: ["month", "week", "day", "4day"],
     mode: "stack",
@@ -152,6 +158,39 @@ export default {
       //   arrow_left;   // -
       console.log("value:");
       console.log(this.value);
+    },
+  },
+
+  watch: {
+    // data(newValue, oldValue) {
+
+    // }
+
+    value(newValue, oldValue) {
+    //   console.log("newValue");
+    //   console.log(newValue);
+    //   console.log("oldValue"); // +
+    //   console.log(oldValue); // +
+
+
+    //   console.log('$refs.calendar');
+    //   console.log(this.$refs.calendar); // +
+
+    //   console.log('$refs.calendar._props');
+    //   console.log(this.$refs.calendar._props);    // +  
+// start & end
+    //   console.log('$refs.calendar._props.start');
+    //   console.log(this.$refs.calendar._props.start); 
+    //   console.log('$refs.calendar._props.end');
+    //   console.log(this.$refs.calendar._props.end); 
+    //   console.log('$refs.calendar._props.type');
+    //   console.log(this.$refs.calendar._props.type); 
+      
+
+    //   changeDateCalendar
+
+    // this.$store.dispatch("deleteItem", itemUrl);
+    this.$store.dispatch("changeDateCalendar", newValue);
     },
   },
 };
