@@ -11,6 +11,14 @@
 
     <v-main>
       <v-container grid-list-xs>
+        <v-row :align="align" no-gutters __style="height: 150px">
+          <v-col lg="8"> Search placeholder </v-col>
+          <v-col lg="4">
+            <ViewControls class="asd"></ViewControls>
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-container grid-list-xs>
         <!-- <Day class="asd"></Day> -->
         <Feed class="asd"></Feed>
       </v-container>
@@ -30,6 +38,7 @@
 // import HelloWorld from "@/components/HelloWorld.vue";
 // import Day from "@/components/Day.vue";
 import Feed from "@/components/Feed.vue";
+import ViewControls from "@/components/ViewControls.vue";
 
 export default {
   name: "App",
@@ -37,6 +46,7 @@ export default {
   components: {
     // Day,
     Feed,
+    ViewControls,
     //   HelloWorld
   },
 
