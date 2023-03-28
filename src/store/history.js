@@ -6,7 +6,7 @@ export default {
         // dateCalendar: "",
         dateCalendar: new Date(),
         rangeCalendar: [],
-        calendarMode: "",
+        calendarMode: "day",
 
         dateToday: new Date(),
         // dateToday: new Date('10-02-2023'),

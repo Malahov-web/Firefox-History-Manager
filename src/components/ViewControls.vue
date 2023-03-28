@@ -5,13 +5,7 @@
       @rewind-calendar="rewindCalendar"
     ></ViewControlsDate>
 
-    <div class="view-controls__buttons">
-      <v-btn-toggle v-model="calendar_mode" mandatory>
-        <v-btn color="primary" elevation="2" large raised>day</v-btn>
-        <v-btn color="primary" elevation="2" large raised>week </v-btn>
-        <v-btn color="primary" elevation="2" large raised>month</v-btn>
-      </v-btn-toggle>
-    </div>
+    <ViewControlsButtons class="asd"></ViewControlsButtons>
 
     <v-sheet tile height="54" class="d-flex">
       <v-btn icon class="ma-2" @click="$refs.calendar.prev()">
@@ -55,7 +49,7 @@
         ref="calendar"
         v-model="value"
         :weekdays="[0, 1, 2, 3, 4, 5, 6]"
-        :type="type"
+        :type="calendarModeString"
         :events="events"
         @change="getEvents"
       ></v-calendar>
@@ -67,6 +61,7 @@
 import moment from "moment";
 
 import ViewControlsDate from "@/components/ViewControlsDate.vue";
+import ViewControlsButtons from "@/components/ViewControlsButtons.vue";
 // export default {
 // };
 
@@ -75,12 +70,13 @@ export default {
 
   components: {
     ViewControlsDate,
+    ViewControlsButtons,
   },
 
   data: () => ({
-    calendar_mode: undefined,
+    // calendar_mode: undefined,
     // calendar_mode_names: ["month", "week", "day"],
-    calendar_mode_names: ["day", "week", "month"],
+    // calendar_mode_names: ["day", "week", "month"],
     //
     // calendar
     type: "month", // month
@@ -126,6 +122,11 @@ export default {
       let datetime = this.$store.state.history.dateCalendar; // -
 
       return moment(datetime).format("D MMMM YYYY");
+    },
+
+    calendarModeString() {
+      //   let this.$store.state.history.calendarMode;
+      return this.$store.state.history.calendarMode; // он и так в store в виде текста
     },
   },
 
@@ -223,10 +224,10 @@ export default {
       //   this.$store.dispatch("changeCalendarMode", mode);
     },
 
-    calendar_mode(newValue) {
-      console.log("calendar_mode newValue"); // +
-      console.log(newValue); // +
-    },
+    // calendar_mode(newValue) {
+    //   console.log("calendar_mode newValue"); // +
+    //   console.log(newValue); // +
+    // },
 
     value(newValue, oldValue) {
       //   console.log("newValue");
@@ -250,8 +251,8 @@ export default {
       ];
       this.$store.dispatch("changeRangeCalendar", rangeCalendarArr);
 
-      let mode = this.calendar_mode_names[this.calendar_mode];
-      this.$store.dispatch("changeCalendarMode", mode);
+      //   let mode = this.calendar_mode_names[this.calendar_mode];
+      //   this.$store.dispatch("changeCalendarMode", mode);
 
       //   this.$store.dispatch("changeCalendarMode", mode);
     },
