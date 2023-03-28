@@ -3,7 +3,10 @@ export default {
         value: "my value",
         history: [],
 
-        dateCalendar: "",
+        // dateCalendar: "",
+        dateCalendar: new Date(),
+        rangeCalendar: [],
+        calendarMode: "",
 
         dateToday: new Date(),
         // dateToday: new Date('10-02-2023'),
@@ -45,7 +48,16 @@ export default {
             state.dateCalendar = datetime;
             // console.log('state.dateCalendar in SET_DATE_CALENDAR');
             // console.log(state.dateCalendar); // +
-        }
+        },
+        SET_RANGE_CALENDAR(state, rangeArr) {
+            state.rangeCalendar = rangeArr;
+            // console.log('state.dateCalendar in SET_DATE_CALENDAR');
+            // console.log(state.dateCalendar); // +
+        },
+
+        SET_CALENDAR_MODE(state, mode) {
+            state.calendarMode = mode;
+        },
     },
 
     getters: {
@@ -109,7 +121,7 @@ export default {
                 });
         },
 
-        fetchHistoryByDay({ commit }) {
+        ____fetchHistoryByDay({ commit }) {
             // Дата за вчерашнее число)  start
             let dateOneDayAgo = new Date();
             dateOneDayAgo.setDate(dateOneDayAgo.getDate() - 1);
@@ -136,6 +148,58 @@ export default {
                     startTime: new Date("2023-03-06"),
                     // endTime: new Date(),
                     endTime: new Date("2023-03-07"),
+                })
+                .then((response) => {
+                    commit("SET_HISTORY", response);
+                    console.log("history has been fetched:", response); // <--- here
+                });
+        },
+
+        __fetchHistoryByDay({ commit }) {
+            // Дата за вчерашнее число)  start
+            let dateOneDayAgo = new Date();
+            dateOneDayAgo.setDate(dateOneDayAgo.getDate() - 1);
+            dateOneDayAgo.setHours(0, 0, 0);
+
+            let endTimeOneDayAgo = new Date();
+            endTimeOneDayAgo.setHours(0, 0, 0);
+            // let endTimeOneDayAgo = dateOneDayAgo.setDate(dateOneDayAgo.getDate() + 1);
+            console.log("dateOneDayAgo");
+            console.log(dateOneDayAgo);
+            console.log("endTimeOneDayAgo");
+            console.log(endTimeOneDayAgo);
+            // Дата за вчерашнее число)  end
+
+            browser.history // ERROR
+                // .search({ text: "" }) // по умолчанию за последнеи 24 часа
+                .search({
+                    text: "",
+                    // startTime: dateOneDayAgo,
+                    // // endTime: new Date(),
+                    // endTime: endTimeOneDayAgo,
+                    //
+                    // TEMP DEV: за конкретную фикс дату - 6 марта
+                    // startTime: new Date("2023-03-06T23:59:50"), // +
+                    // startTime: new Date("2023-03-06T00:00:00"), // +
+                    startTime: new Date("2023-03-06"), // +  === 2023-03-06T00:00:00
+                    // endTime: new Date(),
+                    endTime: new Date("2023-03-06T23:59:59"),
+                })
+                .then((response) => {
+                    commit("SET_HISTORY", response);
+                    console.log("history has been fetched:", response); // <--- here
+                });
+        },
+
+        fetchHistoryByDay({ commit, state }) {
+            let startDateTime = state.rangeCalendar[0];
+            let endDateTime = state.rangeCalendar[0];
+
+            browser.history
+                .search({
+                    text: "",
+                    startTime: startDateTime,
+                    endTime: endDateTime,
                 })
                 .then((response) => {
                     commit("SET_HISTORY", response);
@@ -181,12 +245,19 @@ export default {
         // .then(renderList);
 
         changeDateCalendar({ commit }, dateStr) {
-
             let datetime = new Date(dateStr);
             commit("SET_DATE_CALENDAR", datetime);
             // console.log('datetime to SET_DATE_CALENDAR');
             // console.log(datetime);
-        }
+        },
+
+        changeRangeCalendar({ commit }, rangeArr) {
+            commit("SET_RANGE_CALENDAR", rangeArr);
+        },
+
+        changeCalendarMode({ commit }, mode) {
+            commit("SET_CALENDAR_MODE", mode);
+        },
     },
 };
 

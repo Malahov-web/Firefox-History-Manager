@@ -1,5 +1,18 @@
 <template>
-  <div>
+  <div class="view-controls">
+    <ViewControlsDate
+      class="asd"
+      @rewind-calendar="rewindCalendar"
+    ></ViewControlsDate>
+
+    <div class="view-controls__buttons">
+      <v-btn-toggle v-model="calendar_mode" mandatory>
+        <v-btn color="primary" elevation="2" large raised>day</v-btn>
+        <v-btn color="primary" elevation="2" large raised>week </v-btn>
+        <v-btn color="primary" elevation="2" large raised>month</v-btn>
+      </v-btn-toggle>
+    </div>
+
     <v-sheet tile height="54" class="d-flex">
       <v-btn icon class="ma-2" @click="$refs.calendar.prev()">
         <!-- <v-btn icon class="ma-2" @click="moveBack()"> -->
@@ -37,26 +50,13 @@
         <v-icon>mdi-chevron-right</v-icon>
       </v-btn>
     </v-sheet>
-    <v-sheet height="610" :style="myStyles">
-      <!-- <v-calendar
-        ref="calendar"
-        v-model="value"
-        :weekdays="weekday"
-        :type="type"
-        :events="events"
-        :event-overlap-mode="mode"
-        :event-overlap-threshold="30"
-        :event-color="getEventColor"
-        @change="getEvents"
-      ></v-calendar> -->
-
+    <v-sheet height="10" :style="myStyles">
       <v-calendar
         ref="calendar"
         v-model="value"
         :weekdays="[0, 1, 2, 3, 4, 5, 6]"
         :type="type"
         :events="events"
-
         @change="getEvents"
       ></v-calendar>
     </v-sheet>
@@ -64,19 +64,26 @@
 </template>
 
 <script>
+import moment from "moment";
+
+import ViewControlsDate from "@/components/ViewControlsDate.vue";
 // export default {
 // };
 
 export default {
   name: "ViewControls",
 
+  components: {
+    ViewControlsDate,
+  },
+
   data: () => ({
-        // :start="start"
-        // :end="end"    
-    // start: "",
-    // end: "",
+    calendar_mode: undefined,
+    // calendar_mode_names: ["month", "week", "day"],
+    calendar_mode_names: ["day", "week", "month"],
     //
-    type: "month",
+    // calendar
+    type: "month", // month
     types: ["month", "week", "day", "4day"],
     mode: "stack",
     modes: ["stack", "column"],
@@ -113,6 +120,15 @@ export default {
       //   opacity: 0.2,
     },
   }),
+
+  computed: {
+    __dateActive() {
+      let datetime = this.$store.state.history.dateCalendar; // -
+
+      return moment(datetime).format("D MMMM YYYY");
+    },
+  },
+
   methods: {
     getEvents({ start, end }) {
       const events = [];
@@ -159,49 +175,134 @@ export default {
       console.log("value:");
       console.log(this.value);
     },
+
+    rewindCalendar(direction) {
+      console.log(direction);
+      // this.$refs.calendar.prev();
+      this.$refs.calendar[direction](); // + динамическое имя метода при вызове
+    },
   },
 
   watch: {
-    // data(newValue, oldValue) {
+    __value(newValue, oldValue) {
+      //   console.log("newValue");
+      //   console.log(newValue);
+      console.log("oldValue"); // +
+      console.log(oldValue); // +
 
-    // }
+      //   console.log('$refs.calendar');
+      //   console.log(this.$refs.calendar); // +
+
+      //   console.log('$refs.calendar._props');
+      //   console.log(this.$refs.calendar._props);    // +
+      // start & end
+      //   console.log('$refs.calendar._props.start');
+      //   console.log(this.$refs.calendar._props.start);
+      //   console.log('$refs.calendar._props.end');
+      //   console.log(this.$refs.calendar._props.end);
+      //   console.log('$refs.calendar._props.type');
+      //   console.log(this.$refs.calendar._props.type);
+      console.log("$refs.calendar.lastStart ");
+      //   console.log(this.$refs.calendar.lastStart);  // сам object)
+      console.log(this.$refs.calendar.lastStart.date);
+      console.log("$refs.calendar.lastEnd ");
+      //   console.log(this.$refs.calendar.lastEnd);  // сам object)
+      console.log(this.$refs.calendar.lastEnd.date);
+
+      //   changeDateCalendar
+
+      // this.$store.dispatch("deleteItem", itemUrl);
+      this.$store.dispatch("changeDateCalendar", newValue);
+
+      let rangeCalendarArr = [
+        this.$refs.calendar.lastStart.date,
+        this.$refs.calendar.lastEnd.date,
+      ];
+      this.$store.dispatch("changeRangeCalendar", rangeCalendarArr);
+
+      //   this.$store.dispatch("changeCalendarMode", mode);
+    },
+
+    calendar_mode(newValue) {
+      console.log("calendar_mode newValue"); // +
+      console.log(newValue); // +
+    },
 
     value(newValue, oldValue) {
-    //   console.log("newValue");
-    //   console.log(newValue);
-    //   console.log("oldValue"); // +
-    //   console.log(oldValue); // +
+      //   console.log("newValue");
+      //   console.log(newValue);
+      console.log("oldValue"); // +
+      console.log(oldValue); // +
 
+      console.log("$refs.calendar.lastStart ");
+      console.log(this.$refs.calendar.lastStart.date);
+      console.log("$refs.calendar.lastEnd ");
+      console.log(this.$refs.calendar.lastEnd.date);
 
-    //   console.log('$refs.calendar');
-    //   console.log(this.$refs.calendar); // +
+      //   changeDateCalendar
 
-    //   console.log('$refs.calendar._props');
-    //   console.log(this.$refs.calendar._props);    // +  
-// start & end
-    //   console.log('$refs.calendar._props.start');
-    //   console.log(this.$refs.calendar._props.start); 
-    //   console.log('$refs.calendar._props.end');
-    //   console.log(this.$refs.calendar._props.end); 
-    //   console.log('$refs.calendar._props.type');
-    //   console.log(this.$refs.calendar._props.type); 
-      
+      // this.$store.dispatch("deleteItem", itemUrl);
+      this.$store.dispatch("changeDateCalendar", newValue);
 
-    //   changeDateCalendar
+      let rangeCalendarArr = [
+        this.$refs.calendar.lastStart.date,
+        this.$refs.calendar.lastEnd.date,
+      ];
+      this.$store.dispatch("changeRangeCalendar", rangeCalendarArr);
 
-    // this.$store.dispatch("deleteItem", itemUrl);
-    this.$store.dispatch("changeDateCalendar", newValue);
+      let mode = this.calendar_mode_names[this.calendar_mode];
+      this.$store.dispatch("changeCalendarMode", mode);
+
+      //   this.$store.dispatch("changeCalendarMode", mode);
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" __scoped>
 .v-calendar {
-  //   position: absolute;
-  //   z-index: -1;
-  //   height: 0px !important;
-  //   width: 0 !important;
-  //   opacity: 0 !important;
+  position: absolute;
+  z-index: -1;
+  height: 0px !important;
+  width: 0 !important;
+  opacity: 0 !important;
 }
+
+.v-btn-toggle > .v-btn.v-btn--active {
+  //   color: inherit;
+  //   opacity: 1;
+
+  //   color: #fff !important;
+}
+
+.v-btn-toggle > .v-btn.v-btn--active > .v-btn__content {
+  color: #fff !important;
+}
+// .v-btn__content {
+//   color: #fff !important;
+// }
+
+//
+// Template:)
+//
+// <v-btn
+//   class="mx-2"
+//   fab
+//   dark
+//   x-small
+//   color="grey darken-3"
+//   @click="$refs.calendar.prev()"
+// >
+//   <!-- <v-icon dark> arrow_circle_left </v-icon> -->
+//   <!-- <v-icon dark> arrow_back </v-icon> -->
+//   <!-- <v-icon dark> navigate_before </v-icon> -->
+
+//   <!-- <v-icon dark> arrow_back_ios </v-icon> -->
+//   <!-- Не по центру -->
+
+//   <!-- <v-icon dark> keyboard_arrow_left </v-icon> -->
+//   <!-- слишком маленькая -->
+
+//   <v-icon dark> arrow_left </v-icon>
+// </v-btn>
 </style>

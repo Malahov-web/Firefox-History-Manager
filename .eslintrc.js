@@ -28,16 +28,16 @@ module.exports = {
 
         // А таком конфиге удобно работать в JS-файлах, 
         // но не будет компилироваться)
-        "prettier/prettier": [
-            "error",
-            {
-                "endOfLine": "auto",
+        // "prettier/prettier": [
+        //     "error",
+        //     {
+        //         "endOfLine": "auto",
 
-                // "tabWidth": 4,
-                // "disableLanguages": ["js"] // don't work?
-            },
-            "disableLanguages": ["js"]
-        ],
+        //         // "tabWidth": 4,
+        //         // "disableLanguages": ["js"] // don't work?
+        //     },
+        //     // "disableLanguages": ["js"]
+        // ],
 
     },
 };
