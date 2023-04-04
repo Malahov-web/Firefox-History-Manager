@@ -1,17 +1,33 @@
 <template>
   <div class="view-controls__date date">
     <div class="date__change-buttons">
-      <v-btn
+      <!-- <v-btn
         class="mx-2"
         fab
         dark
         x-small
-        color="grey darken-3"
+        __color="grey darken-3"
         @click.prevent="rewindCalendar('prev')"
       >
         <v-icon dark> arrow_left </v-icon>
+      </v-btn> -->
+
+      <!-- <v-btn
+        class="mx-2"
+        fab
+        dark
+        x-small
+        color="white"
+        @click.prevent="rewindCalendar('prev')"
+      >
+        <v-icon dark> arrow_left </v-icon>
+      </v-btn> -->
+
+      <v-btn icon color="grey darken-3" @click.prevent="rewindCalendar('prev')">
+        <v-icon>navigate_before</v-icon>
       </v-btn>
-      <v-btn
+
+      <!-- <v-btn
         class="mx-2"
         fab
         dark
@@ -20,6 +36,10 @@
         color="grey darken-3"
       >
         <v-icon dark> arrow_right </v-icon>
+      </v-btn> -->
+
+      <v-btn icon color="grey darken-3" @click.prevent="rewindCalendar('next')">
+        <v-icon>navigate_next</v-icon>
       </v-btn>
     </div>
     <div class="date__value">
@@ -28,11 +48,7 @@
         <span>2023</span> -->
       <span> {{ dateActiveFormatted }} </span>
     </div>
-    <div class="date__datepicker-icon">
-      <v-btn icon color="grey darken-3">
-        <v-icon>date_range</v-icon>
-      </v-btn>
-    </div>
+    <div class="date__datepicker-icon"></div>
   </div>
 </template>
 

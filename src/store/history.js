@@ -1,10 +1,14 @@
+import moment from "moment";
+
 export default {
     state: {
         value: "my value",
         history: [],
 
         // dateCalendar: "",
-        dateCalendar: new Date(),
+        dateCalendar: new Date(), // OK
+        // dateCalendar: new Date("06-03-2023"), // TEST - Invalid Date
+        // dateCalendar: new Date("2023-03-06"), // TEST
         rangeCalendar: [],
         calendarMode: "day",
 
@@ -192,8 +196,17 @@ export default {
         },
 
         fetchHistoryByDay({ commit, state }) {
-            let startDateTime = state.rangeCalendar[0];
-            let endDateTime = state.rangeCalendar[0];
+            // // v. by Range
+            // let startDateTime = new Date(state.rangeCalendar[0]);
+            // let endDateTime = new Date(`${state.rangeCalendar[0]}T23:59:59`);
+
+            // v. by Range
+            let startDateTime = new Date(state.dateCalendar);
+            let endDateTime = new Date(`${state.dateCalendar}`);
+            endDateTime.setHours(23, 59, 59);
+
+            console.log("endDateTime");
+            console.log(endDateTime);
 
             browser.history
                 .search({
@@ -205,6 +218,62 @@ export default {
                     commit("SET_HISTORY", response);
                     console.log("history has been fetched:", response); // <--- here
                 });
+        },
+
+        fetchHistoryByMonth({ commit, state }) {
+            // v. by Range
+            // let startDateTime = new Date(state.dateCalendar);
+            // let endDateTime = new Date(`${state.dateCalendar}`);
+            // endDateTime.setHours(23, 59, 59);
+
+            // Прикол в том , что moment() возвращает НЕ new Date(), а какой-то объект
+            // let startDateTime = moment(state.dateCalendar).startOf('month').format("X");
+            // let endDateTime = moment(state.dateCalendar).endOf('month').format("X");
+
+            // timestamp тоже не подходит
+            // let startDateTime = moment(state.dateCalendar).startOf('month').format("X");
+            // let endDateTime = moment(state.dateCalendar).endOf('month').format("X");
+
+            // а вот метод .format()  - возвращает как раз объект Date()
+            let startDateTime = moment(state.dateCalendar).startOf("month").format();
+            let endDateTime = moment(state.dateCalendar).endOf("month").format();
+
+            console.log("startDateTime");
+            console.log(startDateTime);
+            console.log("endDateTime");
+            console.log(endDateTime);
+
+            browser.history
+                .search({
+                    text: "",
+                    startTime: startDateTime,
+                    endTime: endDateTime,
+                    maxResults: 1000,
+                })
+                .then((response) => {
+                    commit("SET_HISTORY", response);
+                    console.log("history has been fetched:", response); // <--- here
+                });
+        },
+
+        fetchHistoryBy({ state, dispatch }, mode) {
+            console.log("mode in action fetchHistoryBy:");
+            console.log(state.calendarMode);
+            console.log(mode);
+
+            switch (state.calendarMode) {
+                case "day":
+                    dispatch("fetchHistoryByDay");
+
+                    break;
+                case "month":
+                    dispatch("fetchHistoryByMonth");
+
+                    break;
+
+                default:
+                    break;
+            }
         },
 
         // __deleteItem({ commit }, value) {

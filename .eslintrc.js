@@ -36,7 +36,7 @@ module.exports = {
         //         // "tabWidth": 4,
         //         // "disableLanguages": ["js"] // don't work?
         //     },
-        //     // "disableLanguages": ["js"]
+        //     "disableLanguages": ["js"]
         // ],
 
     },

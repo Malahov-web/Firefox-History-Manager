@@ -7,43 +7,6 @@
 
     <ViewControlsButtons class="asd"></ViewControlsButtons>
 
-    <v-sheet tile height="54" class="d-flex">
-      <v-btn icon class="ma-2" @click="$refs.calendar.prev()">
-        <!-- <v-btn icon class="ma-2" @click="moveBack()"> -->
-        <v-icon>mdi-chevron-left</v-icon>
-      </v-btn>
-      <v-select
-        v-model="type"
-        :items="types"
-        dense
-        outlined
-        hide-details
-        class="ma-2"
-        label="type"
-      ></v-select>
-      <v-select
-        v-model="mode"
-        :items="modes"
-        dense
-        outlined
-        hide-details
-        label="event-overlap-mode"
-        class="ma-2"
-      ></v-select>
-      <v-select
-        v-model="weekday"
-        :items="weekdays"
-        dense
-        outlined
-        hide-details
-        label="weekdays"
-        class="ma-2"
-      ></v-select>
-      <v-spacer></v-spacer>
-      <v-btn icon class="ma-2" @click="$refs.calendar.next()">
-        <v-icon>mdi-chevron-right</v-icon>
-      </v-btn>
-    </v-sheet>
     <v-sheet height="10" :style="myStyles">
       <v-calendar
         ref="calendar"
@@ -58,12 +21,10 @@
 </template>
 
 <script>
-import moment from "moment";
+// import moment from "moment";
 
 import ViewControlsDate from "@/components/ViewControlsDate.vue";
 import ViewControlsButtons from "@/components/ViewControlsButtons.vue";
-// export default {
-// };
 
 export default {
   name: "ViewControls",
@@ -74,13 +35,8 @@ export default {
   },
 
   data: () => ({
-    // calendar_mode: undefined,
-    // calendar_mode_names: ["month", "week", "day"],
-    // calendar_mode_names: ["day", "week", "month"],
-    //
     // calendar
-    type: "month", // month
-    types: ["month", "week", "day", "4day"],
+
     mode: "stack",
     modes: ["stack", "column"],
     weekday: [0, 1, 2, 3, 4, 5, 6], // какие дния недели отображать в кал-ре
@@ -118,12 +74,6 @@ export default {
   }),
 
   computed: {
-    __dateActive() {
-      let datetime = this.$store.state.history.dateCalendar; // -
-
-      return moment(datetime).format("D MMMM YYYY");
-    },
-
     calendarModeString() {
       //   let this.$store.state.history.calendarMode;
       return this.$store.state.history.calendarMode; // он и так в store в виде текста
@@ -161,21 +111,6 @@ export default {
     },
 
     //
-    moveBack() {
-      //   $refs.calendar.prev();
-      this.$refs.calendar.prev();
-      //   let isChange = this.$refs.calendar.checkChange(); // moveBack
-      this.showLog();
-
-      //   console.log("isChange");
-      //   console.log(isChange); // undefined
-    },
-    showLog() {
-      // arrow_circle_left   // -
-      //   arrow_left;   // -
-      console.log("value:");
-      console.log(this.value);
-    },
 
     rewindCalendar(direction) {
       console.log(direction);
@@ -224,14 +159,9 @@ export default {
       //   this.$store.dispatch("changeCalendarMode", mode);
     },
 
-    // calendar_mode(newValue) {
-    //   console.log("calendar_mode newValue"); // +
-    //   console.log(newValue); // +
-    // },
-
     value(newValue, oldValue) {
-      //   console.log("newValue");
-      //   console.log(newValue);
+      console.log("newValue");
+      console.log(newValue);
       console.log("oldValue"); // +
       console.log(oldValue); // +
 
@@ -251,10 +181,14 @@ export default {
       ];
       this.$store.dispatch("changeRangeCalendar", rangeCalendarArr);
 
+      // HINT: обновление режима вида происходит из комп-та ViewControlsButtons
       //   let mode = this.calendar_mode_names[this.calendar_mode];
       //   this.$store.dispatch("changeCalendarMode", mode);
 
       //   this.$store.dispatch("changeCalendarMode", mode);
+
+      //   this.$store.dispatch("fetchHistoryByDay"); // +
+      this.$store.dispatch("fetchHistoryBy"); // этот моднее
     },
   },
 };
@@ -279,31 +213,4 @@ export default {
 .v-btn-toggle > .v-btn.v-btn--active > .v-btn__content {
   color: #fff !important;
 }
-// .v-btn__content {
-//   color: #fff !important;
-// }
-
-//
-// Template:)
-//
-// <v-btn
-//   class="mx-2"
-//   fab
-//   dark
-//   x-small
-//   color="grey darken-3"
-//   @click="$refs.calendar.prev()"
-// >
-//   <!-- <v-icon dark> arrow_circle_left </v-icon> -->
-//   <!-- <v-icon dark> arrow_back </v-icon> -->
-//   <!-- <v-icon dark> navigate_before </v-icon> -->
-
-//   <!-- <v-icon dark> arrow_back_ios </v-icon> -->
-//   <!-- Не по центру -->
-
-//   <!-- <v-icon dark> keyboard_arrow_left </v-icon> -->
-//   <!-- слишком маленькая -->
-
-//   <v-icon dark> arrow_left </v-icon>
-// </v-btn>
 </style>
