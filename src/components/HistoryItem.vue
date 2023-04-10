@@ -10,7 +10,7 @@
   <div class="history__item">
     <div
       class="history__item-time"
-      v-bind:mydata="humanDateTEMP(item.lastVisitTime)"
+      v-bind:lastVisitTime="humanDateTEMP(item.lastVisitTime)"
     >
       {{ getHistoryItemTimeFormatted(item.lastVisitTime) }}
     </div>

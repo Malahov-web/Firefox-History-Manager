@@ -19,8 +19,9 @@
         </v-row>
       </v-container>
       <v-container grid-list-xs>
-        <Day class="asd"></Day>
+        <!-- <Day class="asd"></Day> -->
         <!-- <Feed class="asd"></Feed> -->
+        <Month class="asd"></Month>
       </v-container>
       <!--  -->
       <!-- <hello-world /> -->
@@ -36,16 +37,18 @@
 
 <script>
 // import HelloWorld from "@/components/HelloWorld.vue";
-import Day from "@/components/Day.vue";
+// import Day from "@/components/Day.vue";
 // import Feed from "@/components/Feed.vue";
+import Month from "@/components/Month.vue";
 import ViewControls from "@/components/ViewControls.vue";
 
 export default {
   name: "App",
 
   components: {
-    Day,
+    // Day,
     // Feed,
+    Month,
     ViewControls,
     //   HelloWorld
   },

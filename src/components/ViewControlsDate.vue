@@ -108,15 +108,6 @@ export default {
   },
 
   methods: {
-    // setRating(event, value) {
-    //   this.activeRating = value;
-    //   this.cleanHoverRating();
-    //   //   this.$emit("myEvent");
-    //   this.$emit("set-rating", value);
-
-    //   this.$emit("input", event.target.value);
-    // },
-
     rewindCalendar(direction) {
       this.$emit("rewind-calendar", direction);
     },

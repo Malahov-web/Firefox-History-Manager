@@ -1,5 +1,10 @@
 <template>
   <div class="days">
+    <!-- <div
+      class="day"
+      v-for="(dayHistory, name) in historyGroupedByDay"
+      :key="name"
+    > -->
     <div
       class="day"
       v-for="(dayHistory, name) in historyGroupedByDay"
@@ -50,6 +55,10 @@ export default {
       //   return this.$store.state.history;
     },
 
+    dateCalendar() {
+      return this.$store.state.history.dateCalendar;
+    },
+
     dayDate() {
       // return this.getDayDate(this.history);
       //   return this.getDayDateFormatted(this.history);
@@ -58,9 +67,13 @@ export default {
       return HistoryServices.getDayDateFormatted(this.history);
     },
 
+    historyCleaned() {
+      return this.cleanHistory(this.history);
+    },
+
     historyGroupedByDay() {
-      return this.groupHistoryByDay(this.history);
-      //   return this.groupHistoryByDay(this.historyHumanReadable);
+      //   return this.groupHistoryByDay(this.history);
+      return this.groupHistoryByDay(this.historyCleaned);
     },
   },
 
@@ -124,6 +137,78 @@ export default {
     getDayDateDMMMMdddd(dateStr) {
       let date = moment(dateStr).format("D MMMM, dddd");
       return date;
+    },
+
+    __cleanHistory(historyArr) {
+      // удаляет повторяющиеся записи, если они есть в других месяцах
+      //   let lastvisittimeDate = new Date()
+
+      // .map() - возвращает для каждого элемента новый
+      // в случае return; он вернет туда undefined
+      // поэтому у нас массив набитый undefined.
+      // Надо делать через old good foor loop:)
+      let newArr = historyArr.map((item) => {
+        // let date = new Date(item.lastVisitTime); // 2023-03-25T01:03:37+03:00
+        let visitsCount = item.visitCount;
+        // console.log("visitsCount");
+        // console.log(visitsCount);
+
+        if (visitsCount > 1) {
+          return;
+        }
+        return item;
+      });
+
+      console.log("newArr"); //
+      console.log(newArr);
+      console.log("newArr length"); // 15 vs
+      console.log(newArr.length);
+
+      return newArr;
+    },
+
+    cleanHistory(historyArr) {
+      let newArr = [];
+
+      for (let index = 0; index < historyArr.length; index++) {
+        const item = historyArr[index];
+
+        // let visitsCount = item.visitCount;
+        // console.log("visitsCount");
+        // console.log(visitsCount);
+
+        // if (visitsCount > 1) {
+        //   //   return;
+        //   continue;
+        // }
+
+        if (!this.isDateMatch(item.lastVisitTime)) {
+          continue;
+        }
+        newArr.push(item);
+      }
+
+      console.log("newArr"); //
+      console.log(newArr);
+      console.log("newArr length"); // 15 vs
+      console.log(newArr.length);
+
+      return newArr;
+    },
+
+    isDateMatch(datetime) {
+      // Нам нужно сравнить дату - день-месяц, не учитывася время
+      //   let itemDateString = moment(datetime).format("YYYY-MMMM-DD");
+      //   let activeDateString = moment(this.dateCalendar).format("YYYY-MMMM-DD");
+
+      let itemDateString = moment(datetime).format("YYYY-MMMM");
+      let activeDateString = moment(this.dateCalendar).format("YYYY-MMMM");
+
+      if (itemDateString == activeDateString) {
+        return true;
+      }
+
+      return false;
     },
   },
 };

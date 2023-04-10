@@ -203,6 +203,7 @@ export default {
             // v. by Range
             let startDateTime = new Date(state.dateCalendar);
             let endDateTime = new Date(`${state.dateCalendar}`);
+            startDateTime.setHours(0, 0, 0); // TODO : uncomment it to fix bug with no 25-march
             endDateTime.setHours(23, 59, 59);
 
             console.log("endDateTime");
