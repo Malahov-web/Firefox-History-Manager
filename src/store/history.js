@@ -6,7 +6,8 @@ export default {
         history: [],
 
         // dateCalendar: "",
-        dateCalendar: new Date(), // OK
+        // dateCalendar: new Date(), // OK
+        dateCalendar: new Date("2023-03-11"), // TEMP DEV for Week
         // dateCalendar: new Date("06-03-2023"), // TEST - Invalid Date
         // dateCalendar: new Date("2023-03-06"), // TEST
         rangeCalendar: [],
@@ -257,6 +258,29 @@ export default {
                 });
         },
 
+        fetchHistoryByWeek({ commit, state }) {
+            let startDateTime = moment(state.dateCalendar).startOf("week").format();
+            let endDateTime = moment(state.dateCalendar).endOf("week").format();
+
+            console.log("startDateTime");
+            console.log(startDateTime);
+            console.log("endDateTime");
+            console.log(endDateTime);
+
+            browser.history
+                .search({
+                    text: "",
+                    startTime: startDateTime,
+                    endTime: endDateTime,
+                    maxResults: 1000,
+                })
+                .then((response) => {
+                    commit("SET_HISTORY", response);
+                    console.log("history has been fetched:", response); // <--- here
+                });
+        },
+
+        // Проверить, можно ли вызвать и-ю динамически вставив в часть имени переменную, и без swith
         fetchHistoryBy({ state, dispatch }, mode) {
             console.log("mode in action fetchHistoryBy:");
             console.log(state.calendarMode);
@@ -269,6 +293,10 @@ export default {
                     break;
                 case "month":
                     dispatch("fetchHistoryByMonth");
+
+                    break;
+                case "week":
+                    dispatch("fetchHistoryByWeek");
 
                     break;
 

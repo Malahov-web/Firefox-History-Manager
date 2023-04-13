@@ -1,10 +1,5 @@
 <template>
   <div class="days">
-    <!-- <div
-      class="day"
-      v-for="(dayHistory, name) in historyGroupedByDay"
-      :key="name"
-    > -->
     <div
       class="day"
       v-for="(dayHistory, name) in historyGroupedByDay"
