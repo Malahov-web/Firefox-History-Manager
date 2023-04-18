@@ -2,27 +2,34 @@
   <!-- <div>Week</div> -->
 
   <div class="weekdays">
-    <div v-for="item in weekdaysDates" :key="item.id">
+    <!-- <div v-for="item in weekdaysDates" :key="item.id">
       {{ item }}
-    </div>
+    </div> -->
 
-    <div v-for="item in historyGroupedByDay" :key="item.id">
+    <!-- <div v-for="item in historyGroupedByDay" :key="item.id">
       {{ item }}
-    </div>
+    </div> -->
 
     <div class="weekday" v-for="item in weekdaysDates" :key="item.id">
-      <div class="weekday__title">weekday__title</div>
+      <div class="weekday__title">
+        <!-- {{ item }} <br /> -->
+        {{ formatWeekdayName(item) }}
+        <br />
+        <span> {{ formatWeekdayDate(item) }}</span>
+      </div>
       <div class="weekday__history">
-        {{ historyGroupedByDay[item] }}
-
         <div
           v-for="historyItem in historyGroupedByDay[item]"
           :key="historyItem.id"
+          class="weekdayhistory__item-outer"
         >
-          {{ historyItem }}
+          <WeekdayHistoryItem
+            :class="'id_' + historyItem.id"
+            :item="historyItem"
+          ></WeekdayHistoryItem>
         </div>
 
-        <div class="weekdayhistory__item">
+        <div class="weekdayhistory__item" style="display: none">
           <div class="weekdayhistory__item-top">
             <div class="weekdayhistory__item-favicon">
               <img src="" alt="" />
@@ -61,10 +68,14 @@
 
 <script>
 import moment from "moment";
+import WeekdayHistoryItem from "@/components/WeekdayHistoryItem.vue";
 
 export default {
   name: "Week",
 
+  components: {
+    WeekdayHistoryItem,
+  },
   created() {
     this.$store.dispatch("fetchHistoryByWeek");
     console.log("Create HOOK");
@@ -134,6 +145,20 @@ export default {
       console.log(historyGroupedObj);
 
       return historyGroupedObj;
+    },
+
+    formatWeekdayName(date) {
+      // 6-March-2023
+      //   let dateArr = date.split("-");
+      //   return moment(`${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`).format("dddd"); //
+      //   return moment(date).format("dddd");
+
+      //   return moment(date); // +
+      return moment(date).format("dddd");
+    },
+
+    formatWeekdayDate(date) {
+      return moment(date).format("D MMM");
     },
   },
 };
