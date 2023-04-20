@@ -37,7 +37,8 @@ export default {
   name: "Feed",
 
   created() {
-    this.$store.dispatch("fetchHistoryByLastMonth");
+    // this.$store.dispatch("fetchHistoryByLastMonth"); // TEMP DEV
+    this.$store.dispatch("fetchHistoryByMonth");
     // this.$store.dispatch("fetchHistory");
     console.log("Create HOOK");
   },

@@ -6,12 +6,13 @@ export default {
         history: [],
 
         // dateCalendar: "",
-        // dateCalendar: new Date(), // OK
-        dateCalendar: new Date("2023-03-11"), // TEMP DEV for Week
+        dateCalendar: new Date(), // OK
+        // dateCalendar: new Date("2023-03-11"), // TEMP DEV for Week
+        // dateCalendar: new Date("2023-02-09"), // TEMP DEV for 8.2
         // dateCalendar: new Date("06-03-2023"), // TEST - Invalid Date
         // dateCalendar: new Date("2023-03-06"), // TEST
         rangeCalendar: [],
-        calendarMode: "day",
+        calendarMode: "day", // ["day", "week", "month"]
 
         dateToday: new Date(),
         // dateToday: new Date('10-02-2023'),

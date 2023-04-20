@@ -65,6 +65,7 @@ body .theme--light.v-application {
     $history_time_width: 75px;
     $history_favicon_width: 2*$l_h; // 48   1*$l_h; // 24
     $history_button_width: 2.5*$l_h; //  2 ? 2.5
+    $history_link_width: 6.5em; // 1em = 16
     // 
 
     &__item {
@@ -104,21 +105,30 @@ body .theme--light.v-application {
         }
 
         &-title {
-            max-width: calc(#{$history_item_width} - #{$history_item_padding_h} - #{ $history_time_width} - #{ $history_favicon_width } #{$history_button_width});
+            // max-width: calc(#{$history_item_width} - #{$history_item_padding_h} - #{ $history_time_width} - #{ $history_favicon_width } #{$history_button_width}); // - error
+            max-width: calc(#{$history_item_width} - #{$history_item_padding_h} - #{ $history_time_width} - #{ $history_favicon_width } - #{ $history_link_width } - #{$history_button_width});
             font-size: 16px;
             line-height: 33px;
             /* identical to box height, or 206% */
             color: $colorTextHeading;
 
-
             white-space: nowrap;
             /* Запрещаем перенос текста */
+            @include text_overflow();
         }
 
         &-link {
-            margin-left: 2em;
+            // margin-left: 2em;
+            padding-left: 2em;
+            padding-right: 1em;
             // State
             opacity: 0.85;
+
+            // Temp width ?
+            // width: 5.5em; // 55px + m=2em;  1em = 16
+            // width: = pl 2em + width 55px + pr 1em
+            width: $history_link_width;
+            //            
 
             .v-icon {
                 color: $colorLink !important;

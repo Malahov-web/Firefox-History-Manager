@@ -7,7 +7,7 @@
 
     <ViewControlsButtons class="asd"></ViewControlsButtons>
 
-    <v-sheet height="10" :style="myStyles">
+    <v-sheet height="0" :style="myStyles">
       <v-calendar
         ref="calendar"
         v-model="value"

@@ -17,7 +17,7 @@
     <div class="history__item-favicon">
       <img __src="" alt="" v-bind:src="generateFaviconUrl(item.url)" />
     </div>
-    <div class="history__item-title">
+    <div class="history__item-title" :title="item.title">
       {{ item.title }}
     </div>
     <div class="history__item-link">
